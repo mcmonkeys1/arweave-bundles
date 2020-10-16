@@ -200,7 +200,7 @@ describe('Data API - verification', function() {
       const item2 = await Data.createData({ data: 'TESTSTRINGC', tags: TEST_TAGS, nonce: VALID_BASE64U }, wallet0);
       const signed2 = await Data.sign(item0, wallet0);
       const bundle = await Data.bundleData([signed0, signed1, signed2]);
-      expect(bundle.items).to.be.an.instanceOf(Array); 
+      expect(bundle).to.have.length.greaterThan(0)
       //writeFileSync(__dirname + '/bundle0.json', JSON.stringify(bundle, undefined, 2));
     })
 

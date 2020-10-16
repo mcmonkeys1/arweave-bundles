@@ -90,11 +90,10 @@ const data1 = await ArData.sign(item, wallet);
 
 const dataItems = [data1, data2]
 
-// Will ensure all items are valid and have been signed,
-// throwing if any are not
+// Will ensure all items are valid and have been signed, throwing if any are not
 const myBundle = await ArData.bundleData(dataItems);
 
-// N.B. bundleData return type has changed
+// N.B. bundleData return type has changed since 0.9.0
 
 const myTx = await arweave.createTransaction({ data: myBundle }, wallet);
 
