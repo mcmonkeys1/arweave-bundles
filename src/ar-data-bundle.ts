@@ -47,5 +47,5 @@ export async function bundleData(deps: Dependencies, datas: DataItemJson[]) {
   await Promise.all(
       datas.map(async d => { if (!(await verify(deps, d))) { throw new Error('Invalid Data') } }) 
   )
-  return { items: datas };
+  return JSON.stringify({ items: datas });
 }

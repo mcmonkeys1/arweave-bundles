@@ -3,5 +3,5 @@
   "compilerOptions": {
     "module": "esnext"
   },
-  "exclude": ["**/tests"]
+  "exclude": ["**/tests","node_modules", "dist", "**/*spec.ts"]
 }
