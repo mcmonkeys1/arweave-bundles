@@ -71,14 +71,16 @@ const myTags = [
   { name: 'App-Version', value: '1.0.0' }
 ]
 
-let item = await ArData.createData({ to: 'awalleet', data: 'somemessage', tags: myTags }, wallet);
+let item = await ArData.createData({ to: 'wallet_address', data: 'some message', tags: myTags }, wallet);
 
 // Add some more tags after creation.
 ArData.addTag(item, 'MyTag', 'value1');
 ArData.addTag(item, 'MyTag', 'value2');
 
 // Sign the data, ready to be added to a bundle
-data = await ArData.sign(item, wallet);
+const data1 = await ArData.sign(item, wallet);
+
+// ...construct data2 here for example
 
 ```
 
@@ -86,11 +88,13 @@ data = await ArData.sign(item, wallet);
 
 ```javascript
 
-const items = await makeManyDataItems();
+const dataItems = [data1, data2]
 
 // Will ensure all items are valid and have been signed,
 // throwing if any are not
-const myBundle = await ArData.bundleData(items);
+const myBundle = await ArData.bundleData(dataItems);
+
+// N.B. bundleData return type has changed
 
 const myTx = await arweave.createTransaction({ data: myBundle }, wallet);
 
