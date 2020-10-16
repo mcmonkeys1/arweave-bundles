@@ -30,3 +30,4 @@ function ArweaveData(deps) {
     };
 }
 exports.default = ArweaveData;
+//# sourceMappingURL=index.js.map

@@ -48,3 +48,4 @@ async function bundleData(deps, datas) {
     return JSON.stringify({ items: datas });
 }
 exports.bundleData = bundleData;
+//# sourceMappingURL=ar-data-bundle.js.map

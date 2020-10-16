@@ -36,3 +36,4 @@ async function getSignatureData(deps, d) {
     ]);
 }
 exports.getSignatureData = getSignatureData;
+//# sourceMappingURL=ar-data-base.js.map

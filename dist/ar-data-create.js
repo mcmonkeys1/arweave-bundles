@@ -57,3 +57,4 @@ async function sign(deps, d, jwk) {
     return d;
 }
 exports.sign = sign;
+//# sourceMappingURL=ar-data-create.js.map

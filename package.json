@@ -6,8 +6,8 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "ts-mocha src/tests/*.spec.ts",
-        "build": "npx @pika/pack",
-        "build2": "npx tsc -p tsconfig.build.json"
+        "build:others": "npx @pika/pack",
+        "build": "npx tsc -p tsconfig.build.json"
     },
     "keywords": [],
     "author": "aidanok",
