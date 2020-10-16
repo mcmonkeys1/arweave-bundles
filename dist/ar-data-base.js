@@ -1,7 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getSignatureData = exports.DataItemJson = void 0;
 /**
  * Serialized format of a DataItem. Json.
  */
-export class DataItemJson {
+class DataItemJson {
     constructor() {
         this.owner = '';
         this.target = '';
@@ -12,13 +15,14 @@ export class DataItemJson {
         this.id = '';
     }
 }
+exports.DataItemJson = DataItemJson;
 /**
  * Return the message that should be signed to produce a valid signature
  *
  * @param deps
  * @param d
  */
-export async function getSignatureData(deps, d) {
+async function getSignatureData(deps, d) {
     return deps.deepHash([
         deps.utils.stringToBuffer('dataitem'),
         deps.utils.stringToBuffer('1'),
@@ -31,3 +35,4 @@ export async function getSignatureData(deps, d) {
         deps.utils.b64UrlToBuffer(d.data)
     ]);
 }
+exports.getSignatureData = getSignatureData;

@@ -1,5 +1,8 @@
-import { getSignatureData } from "./ar-data-base";
-import { verifyEncodedTagsArray, MAX_TAG_COUNT, MAX_TAG_KEY_LENGTH_BYTES, MAX_TAG_VALUE_LENGTH_BYTES } from "./ar-data-verify";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sign = exports.addTag = exports.createData = void 0;
+const ar_data_base_1 = require("./ar-data-base");
+const ar_data_verify_1 = require("./ar-data-verify");
 /**
  * Create a DataItem, encoding tags and data, setting owner, but not
  * sigining it.
@@ -8,7 +11,7 @@ import { verifyEncodedTagsArray, MAX_TAG_COUNT, MAX_TAG_KEY_LENGTH_BYTES, MAX_TA
  * @param opts
  * @param jwk
  */
-export async function createData(deps, opts, jwk) {
+async function createData(deps, opts, jwk) {
     const d = {
         owner: jwk.n,
         target: opts.target || '',
@@ -22,17 +25,19 @@ export async function createData(deps, opts, jwk) {
         signature: '',
         id: '',
     };
-    if (!verifyEncodedTagsArray(deps, d.tags)) {
-        throw new Error(`Tags are invalid, a maximum of ${MAX_TAG_COUNT} tags, a key length of ${MAX_TAG_KEY_LENGTH_BYTES}, a value length of ${MAX_TAG_VALUE_LENGTH_BYTES} has been exceeded, or the tags are otherwise malformed.`);
+    if (!ar_data_verify_1.verifyEncodedTagsArray(deps, d.tags)) {
+        throw new Error(`Tags are invalid, a maximum of ${ar_data_verify_1.MAX_TAG_COUNT} tags, a key length of ${ar_data_verify_1.MAX_TAG_KEY_LENGTH_BYTES}, a value length of ${ar_data_verify_1.MAX_TAG_VALUE_LENGTH_BYTES} has been exceeded, or the tags are otherwise malformed.`);
     }
     return d;
 }
-export function addTag(deps, d, name, value) {
+exports.createData = createData;
+function addTag(deps, d, name, value) {
     d.tags.push({
         name: deps.utils.stringToB64Url(name),
         value: deps.utils.stringToB64Url(value)
     });
 }
+exports.addTag = addTag;
 /**
  * Signs a data item and sets the `signature` and `id` fields to valid values.
  *
@@ -40,9 +45,9 @@ export function addTag(deps, d, name, value) {
  * @param d
  * @param jwk
  */
-export async function sign(deps, d, jwk) {
+async function sign(deps, d, jwk) {
     // Sign 
-    const signatureData = await getSignatureData(deps, d);
+    const signatureData = await ar_data_base_1.getSignatureData(deps, d);
     const signatureBytes = await deps.crypto.sign(jwk, signatureData);
     // Derive Id 
     const idBytes = await deps.crypto.hash(signatureBytes);
@@ -51,3 +56,4 @@ export async function sign(deps, d, jwk) {
     d.id = deps.utils.bufferTob64Url(idBytes);
     return d;
 }
+exports.sign = sign;

@@ -1,7 +1,10 @@
-import { getSignatureData } from "./ar-data-base";
-export const MAX_TAG_KEY_LENGTH_BYTES = 1024 * 1;
-export const MAX_TAG_VALUE_LENGTH_BYTES = 1024 * 3;
-export const MAX_TAG_COUNT = 128;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifyEncodedTagSize = exports.verifyEncodedTagsArray = exports.verify = exports.MAX_TAG_COUNT = exports.MAX_TAG_VALUE_LENGTH_BYTES = exports.MAX_TAG_KEY_LENGTH_BYTES = void 0;
+const ar_data_base_1 = require("./ar-data-base");
+exports.MAX_TAG_KEY_LENGTH_BYTES = 1024 * 1;
+exports.MAX_TAG_VALUE_LENGTH_BYTES = 1024 * 3;
+exports.MAX_TAG_COUNT = 128;
 /**
  * Verifies a DataItem is valid.
  *
@@ -9,11 +12,11 @@ export const MAX_TAG_COUNT = 128;
  * @param d
  * @param jwk
  */
-export async function verify(deps, d) {
+async function verify(deps, d) {
     // Try-catch all so malformed data like invalid base64 or something just returns false. 
     try {
         // Get signature data and signature present in di. 
-        const signatureData = await getSignatureData(deps, d);
+        const signatureData = await ar_data_base_1.getSignatureData(deps, d);
         const signatureBytes = deps.utils.b64UrlToBuffer(d.signature);
         // Verifiy Id is correct 
         const idBytes = await deps.crypto.hash(signatureBytes);
@@ -38,6 +41,7 @@ export async function verify(deps, d) {
         return false;
     }
 }
+exports.verify = verify;
 /**
  *
  * Verify an array of tags only contains objects with exactly two keys, `name` and `value`
@@ -45,8 +49,8 @@ export async function verify(deps, d) {
  *
  * @param tags
  */
-export function verifyEncodedTagsArray(deps, tags) {
-    if (tags.length > MAX_TAG_COUNT) {
+function verifyEncodedTagsArray(deps, tags) {
+    if (tags.length > exports.MAX_TAG_COUNT) {
         return false;
     }
     // Search for something invalid.
@@ -59,20 +63,22 @@ export function verifyEncodedTagsArray(deps, tags) {
             !verifyEncodedTagSize(deps, t));
     return !invalid;
 }
+exports.verifyEncodedTagsArray = verifyEncodedTagsArray;
 /**
  * Verifies the tag name or value does not exceed reasonable bounds in bytes.
  *
  * @param deps
  * @param tag
  */
-export function verifyEncodedTagSize(deps, tag) {
+function verifyEncodedTagSize(deps, tag) {
     const nameLen = deps.utils.b64UrlToBuffer(tag.name).length;
-    if (nameLen < 1 || nameLen > MAX_TAG_KEY_LENGTH_BYTES) {
+    if (nameLen < 1 || nameLen > exports.MAX_TAG_KEY_LENGTH_BYTES) {
         return false;
     }
     const valueLen = deps.utils.b64UrlToBuffer(tag.value).length;
-    if (valueLen < 1 || nameLen > MAX_TAG_VALUE_LENGTH_BYTES) {
+    if (valueLen < 1 || nameLen > exports.MAX_TAG_VALUE_LENGTH_BYTES) {
         return false;
     }
     return true;
 }
+exports.verifyEncodedTagSize = verifyEncodedTagSize;
