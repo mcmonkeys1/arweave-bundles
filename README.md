@@ -64,7 +64,8 @@ const dataItems = [signed1, signed2] //add more signed DataItems if you like
 // Will ensure all items are valid and have been signed, throwing if any are not
 const myBundle = await ArData.bundleData(dataItems);
 
-// N.B. I have updated the return type of bundledData, just feed it straight into createTransaction like so:
+// N.B. I have updated the return type of bundledData, 
+// just feed it straight into createTransaction like so:
 
 const myTx = await arweave.createTransaction({ data: myBundle }, wallet);
 
