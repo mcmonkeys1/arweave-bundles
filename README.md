@@ -1,4 +1,4 @@
-# Arweave-Data (ANS-102)
+# arweave-bundles (ANS-102)
 
 This library contains routines to create, read, and verify Arweave bundled data.
 
