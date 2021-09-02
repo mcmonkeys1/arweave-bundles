@@ -4,6 +4,11 @@ This library contains routines to create, read, and verify Arweave bundled data.
 
 See [ANS-102](https://github.com/ArweaveTeam/arweave-standards/blob/master/ans/ANS-102.md) for more details.
 
+## Install straight from GitHub
+
+`npm install mcmonkeys1/arweave-bundles`
+
+
 ## Initializing the library
 
 This is a self-contained library, so we need to initialize the API with a couple of dependencies:
